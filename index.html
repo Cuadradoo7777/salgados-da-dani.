@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salgados da Dani - Edição Cyberpunk 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            background-color: #0d051c;
+            color: #e0e0e0;
+            font-family: 'Roboto Mono', monospace;
+            overflow: hidden; /* Evita scrollbars causados pelo canvas */
+        }
+
+        #bg-3d {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            top: 0;
+            left: 0;
+        }
+
+        .main-content {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .cyber-card {
+            background: rgba(29, 15, 51, 0.7);
+            border: 1px solid #c026d3;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(192, 38, 211, 0.2), 0 0 30px rgba(192, 38, 211, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .cyber-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(192, 38, 211, 0.4), 0 0 50px rgba(192, 38, 211, 0.2);
+        }
+        
+        .cyber-button {
+            background-color: transparent;
+            border: 2px solid #c026d3;
+            color: #c026d3;
+            padding: 12px 24px;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-button:hover {
+            background-color: #c026d3;
+            color: #ffffff;
+            box-shadow: 0 0 25px #c026d3;
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 8px #c026d3, 0 0 12px #c026d3;
+        }
+        
+        .ph {
+            transition: color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Canvas para o fundo 3D -->
+    <canvas id="bg-3d"></canvas>
+
+    <div class="main-content">
+        <!-- Header -->
+        <header class="sticky top-0 z-50 bg-opacity-80 backdrop-blur-md border-b border-purple-800/30" style="background-color: rgba(13, 5, 28, 0.8);">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-glow">Salgados_Dani</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#menu" class="hover:text-[#c026d3] transition duration-300">CARDÁPIO</a>
+                    <a href="#sobre" class="hover:text-[#c026d3] transition duration-300">SOBRE</a>
+                    <a href="#contato" class="hover:text-[#c026d3] transition duration-300">CONTATO</a>
+                </div>
+                <a href="https://wa.me/5585986234548?text=Olá!%20Vi%20seu%20site%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" class="bg-green-500 text-white px-4 py-2 rounded-md font-bold hover:bg-green-600 transition duration-300 flex items-center space-x-2">
+                    <i class="ph ph-whatsapp-logo text-xl"></i>
+                    <span>Peça Agora</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="h-[70vh] flex items-center justify-center text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 uppercase text-glow">Sabor do Futuro</h1>
+                <p class="text-lg md:text-xl mb-8 text-purple-300">Salgados artesanais para a sua realidade.</p>
+                <a href="#menu" class="cyber-button">Ver Cardápio</a>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 uppercase text-glow">Cardápio</h2>
+                <p class="text-center text-lg text-purple-300 mb-12">Os melhores combos de salgadinhos!</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Cards do cardápio aqui... -->
+                     <div class="cyber-card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-bold mb-2">COMBO CLÁSSICO</h3>
+                        <p class="text-sm text-purple-300 mb-4">20 unidades de cada</p>
+                        <ul class="list-disc list-inside text-gray-300 mb-4 flex-grow">
+                            <li>Coxinha</li>
+                            <li>Queijo</li>
+                            <li>Carne</li>
+                            <li>Salsicha</li>
+                            <li>Pastéis</li>
+                        </ul>
+                        <div class="text-2xl font-bold text-glow mt-auto">R$ 40,00</div>
+                    </div>
+                    <div class="cyber-card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-bold mb-2">COMBO ESPECIAL</h3>
+                        <p class="text-sm text-purple-300 mb-4">20 unidades de cada</p>
+                        <ul class="list-disc list-inside text-gray-300 mb-4 flex-grow">
+                            <li>Coxinha</li>
+                            <li>Empadinha</li>
+                            <li>Canudinho</li>
+                            <li>Pastéis</li>
+                            <li>Bolinha de queijo</li>
+                        </ul>
+                        <div class="text-2xl font-bold text-glow mt-auto">R$ 45,00</div>
+                    </div>
+                    <div class="cyber-card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-bold mb-2">COMBO TOP</h3>
+                        <p class="text-sm text-purple-300 mb-4">25 unidades de cada</p>
+                        <ul class="list-disc list-inside text-gray-300 mb-4 flex-grow">
+                           <li>Coxinha</li>
+                           <li>Bolinha de queijo</li>
+                           <li>Empadinha</li>
+                           <li>Canudinho</li>
+                        </ul>
+                        <div class="text-2xl font-bold text-glow mt-auto">R$ 55,00</div>
+                    </div>
+                    <div class="cyber-card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-bold mb-2">COMBO EMPADINHA+CANUDINHO</h3>
+                        <p class="text-sm text-purple-300 mb-4">50 unidades de cada</p>
+                        <ul class="list-disc list-inside text-gray-300 mb-4 flex-grow">
+                           <li>Empadinha de frango</li>
+                           <li>Canudinho de frango</li>
+                        </ul>
+                        <div class="text-2xl font-bold text-glow mt-auto">R$ 70,00</div>
+                    </div>
+                    <div class="cyber-card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-bold mb-2">CENTO DOS SABORES</h3>
+                        <p class="text-sm text-purple-300 mb-4">100 unidades</p>
+                        <ul class="list-disc list-inside text-gray-300 mb-4 flex-grow">
+                           <li>Coxinha de frango</li>
+                           <li>Bolinha de queijo</li>
+                           <li>Enroladinho de Salsicha</li>
+                           <li>Risole de Carne</li>
+                           <li>Pastéis (carne, queijo, misto, frango)</li>
+                        </ul>
+                        <div class="text-2xl font-bold text-glow mt-auto">R$ 40,00</div>
+                    </div>
+                    <div class="cyber-card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-bold mb-2">TEMOS TAMBÉM (O CENTO)</h3>
+                        <div class="text-gray-300 space-y-3 flex-grow">
+                            <p>100 mini empadinha de frango: <span class="text-glow font-bold">R$ 70,00</span></p>
+                            <p>100 mini canudinhos de frango: <span class="text-glow font-bold">R$ 70,00</span></p>
+                            <p>100 mini pizza: <span class="text-glow font-bold">R$ 100,00</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sobre Nós -->
+        <section id="sobre" class="py-20">
+            <div class="container mx-auto px-6">
+                 <div class="cyber-card p-8 md:p-12 rounded-lg max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold mb-6 text-glow">TRANSMISSÃO_</h2>
+                    <p class="text-lg leading-relaxed text-purple-200">
+                        // Início da transmissão... Na "Salgados da Dani", cada receita é um algoritmo de sabor, executado com ingredientes de primeira e um tempero secreto compilado através de gerações. Nossa missão: entregar a melhor interface de sabor, com a qualidade e o carinho que seu sistema merece. // Fim da transmissão.
+                    </p>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="contato" class="py-12 border-t border-purple-800/30">
+            <div class="container mx-auto px-6 text-center">
+                <h3 class="text-2xl font-bold mb-4 text-glow">Salgados_Dani</h3>
+                <p class="mb-2 text-purple-300">DATAHUB: Rua Engenheiro Silvio Egidio, 47 - Fortaleza, CE</p>
+                <p class="mb-6 text-purple-300 font-bold">ZAP: (85) 98623-4548</p>
+                
+                <div class="mb-8">
+                    <h4 class="font-bold text-purple-300 mb-2">FORMAS DE PAGAMENTO</h4>
+                    <div class="flex justify-center items-center space-x-4">
+                        <i class="ph-fill ph-credit-card text-2xl" title="Cartões de Crédito/Débito"></i>
+                        <i class="ph-fill ph-qr-code text-2xl" title="PIX"></i>
+                        <i class="ph-fill ph-money text-2xl" title="Dinheiro"></i>
+                        <p>Cartões, PIX e Dinheiro</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://www.instagram.com/danielecoelho_edinaldo" target="_blank" class="text-purple-400 hover:text-white"><i class="ph-fill ph-instagram-logo text-3xl"></i></a>
+                    <a href="https://wa.me/5585986234548?text=Olá!%20Vi%20seu%20site%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" class="text-purple-400 hover:text-white"><i class="ph-fill ph-whatsapp-logo text-3xl"></i></a>
+                </div>
+                <p class="text-gray-500 text-sm">&copy; 2024 Salgados da Dani. // TODOS OS DIREITOS RESERVADOS.</p>
+                <p class="text-purple-800 text-xs mt-2">Criado por Gemini</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if(this.getAttribute('href').startsWith('#')){
+                    e.preventDefault();
+                    document.querySelector('.main-content').scrollTo({
+                        top: document.querySelector(this.getAttribute('href')).offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // --- THREE.JS 3D BACKGROUND ---
+        let scene, camera, renderer, salgados;
+
+        function init3D() {
+            // Cena
+            scene = new THREE.Scene();
+
+            // Câmera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Renderer
+            const canvas = document.querySelector('#bg-3d');
+            renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Luzes
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            const emissiveLight = new THREE.PointLight(0xc026d3, 1.5, 100);
+            emissiveLight.position.set(0, 0, 2);
+            scene.add(emissiveLight);
+
+            // Criar Salgados
+            salgados = [];
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x86198f, // Roxo mais escuro
+                emissive: 0xc026d3, // Brilho neon roxo
+                emissiveIntensity: 0.3,
+                metalness: 0.1,
+                roughness: 0.5
+            });
+
+            const geometries = [
+                new THREE.ConeGeometry(0.2, 0.4, 16), // Coxinha
+                new THREE.SphereGeometry(0.2, 16, 16), // Bolinha de queijo
+                new THREE.BoxGeometry(0.4, 0.25, 0.1) // Pastel
+            ];
+
+            for (let i = 0; i < 150; i++) {
+                const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+                const salgado = new THREE.Mesh(geometry, material);
+                
+                salgado.position.x = (Math.random() - 0.5) * 15;
+                salgado.position.y = (Math.random() - 0.5) * 20;
+                salgado.position.z = (Math.random() - 0.5) * 10;
+                
+                salgado.rotation.x = Math.random() * 2 * Math.PI;
+                salgado.rotation.y = Math.random() * 2 * Math.PI;
+                salgado.rotation.z = Math.random() * 2 * Math.PI;
+
+                salgados.push(salgado);
+                scene.add(salgado);
+            }
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            salgados.forEach(salgado => {
+                salgado.rotation.x += 0.005;
+                salgado.rotation.y += 0.005;
+                
+                salgado.position.y -= 0.02; // Velocidade da queda
+                
+                // Se o salgado sair da tela por baixo, reposiciona em cima
+                if (salgado.position.y < -10) {
+                    salgado.position.y = 10;
+                    salgado.position.x = (Math.random() - 0.5) * 15;
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        window.addEventListener('resize', onWindowResize, false);
+        
+        // Inicia a cena 3D
+        init3D();
+
+    </script>
+</body>
+</html>
